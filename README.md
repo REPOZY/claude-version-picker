@@ -51,10 +51,17 @@ You need a standalone `.exe` for the version you want to freeze. Place it in the
 **Option A — you already have the version installed right now**
 
 ```powershell
+# Save your current install as the pinned binary
 Copy-Item "$env:USERPROFILE\.local\bin\claude.exe" "C:\Tools\claude-version-picker\versions\claude-old.exe"
+
+# Then update to the latest
+irm https://claude.ai/install.ps1 | iex
+
+# If the latest binary still reports the old version, force it
+& "$env:USERPROFILE\.local\bin\claude.exe" install latest --force
 ```
 
-Then install the latest normally and skip to Step 3.
+Then skip to Step 3.
 
 **Option B — you need to retrieve a specific older version from scratch**
 
