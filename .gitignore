@@ -1,0 +1,10 @@
+# Pinned binaries are user-supplied and must never be committed
+# (they are ~230-250 MB each and contain licensed Anthropic code)
+versions/*.exe
+versions/*.cmd
+versions/*.ps1
+
+# OS noise
+Thumbs.db
+desktop.ini
+.DS_Store
