@@ -18,15 +18,23 @@ Choose:
 
 Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, following multi-part instructions without drift, and unexpectedly high token consumption within a single session.
 
-Analysis of the [official Claude Code changelog](https://code.claude.com/docs/en/changelog), cross-referenced with community reports across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter, surfaces two versions worth knowing about:
+Analysis of the [official Claude Code changelog](https://code.claude.com/docs/en/changelog), cross-referenced with community reports across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter, surfaces the following picture.
 
-**v2.1.110 — best all-around choice.** Best balance of maturity and modern features. It sits just before v2.1.111, which introduced Opus 4.7 and the `xhigh` effort level. Known issues remain (repeated compaction on small tasks, visual history duplication on resize, deny-rule bypass behaviour, Desktop skill-menu regressions), but as an overall compromise it outperforms both the older folklore versions and the newest builds.
+### The one confirmed CLI-level behavioral change
 
-**v2.1.91 — best rollback target if you want the older "feel".** The version to pin if your goal is less heavy, less overthinky, less token-hungry behaviour. Two confirmed changelog facts make this the conservative cutoff: v2.1.94 (April 7) changed the default effort level from `medium` to `high` for all non-Pro users, and v2.1.94 also introduced a Bedrock auth regression that persisted through v2.1.95 and was not fully resolved until v2.1.98. v2.1.91 predates both.
+**v2.1.94 (April 7) changed the default effort level from `medium` to `high`** for all non-Pro users (API key, Bedrock, Vertex, Team, Enterprise). This is the only change in the changelog that maps directly and unambiguously to the "heavier, more token-hungry, more overthinky" complaints. It is a CLI-level default — not a model-level change — and it is **fully configurable**: every version from v2.1.76 onward supports `/effort medium` to restore the lighter behavior, regardless of which CLI version you are running.
 
-> **Important nuance:** not all "worse planning / lazier" complaints map cleanly to a specific CLI build. Some regressions are tied to model and serving changes that affect all CLI versions rather than the CLI itself. No pinned version is a guarantee against every quality issue if the underlying model behaviour changed independently of the CLI.
+The practical implication: you do not need to pin an old binary to get the old effort behavior. You can run the latest version and type `/effort medium` (or set it in `settings.json` as `"effort": "medium"`) and get the same result.
 
-This picker makes it possible to run v2.1.91 for day-to-day work where consistent, predictable behaviour and efficient token usage matter, while keeping the latest version available for when you need its newer models and raw capabilities — without any manual PATH swapping or re-installing.
+### Version recommendations
+
+**v2.1.110 — best all-around.** The last release before Opus 4.7 (introduced in v2.1.111), with all security and stability fixes from April 7–15 included. The effort default is `high` from v2.1.94, but `/effort medium` restores lighter behavior. Recommended for users who want a mature, well-tested binary without the Opus 4.7 transition and without sacrificing security hardening.
+
+**v2.1.91 — maximum conservatism, with tradeoffs.** Predates the effort default change and the Bedrock auth regression (both v2.1.94). Effort is `medium` by default — no extra configuration needed. The cost is real: v2.1.91 misses significant security fixes introduced in v2.1.98, including a Bash tool permission bypass where a backslash-escaped flag could be auto-allowed as read-only and enable arbitrary code execution, and hardened checks for compound commands and network redirects. Appropriate for personal and hobby use where agentic security is not a concern. Not recommended for production, CI, or enterprise contexts.
+
+> **Important nuance:** a majority of "worse planning / lazier / heavier" complaints in the community are actually tied to model and serving changes on Anthropic's side — changes that affect all CLI versions equally and cannot be avoided by pinning any specific binary. The CLI version controls defaults and tooling; it does not pin the model's reasoning behaviour. No pinned CLI version is a guarantee against model-level regressions.
+
+This picker makes it easy to keep your preferred stable binary for day-to-day work while having the latest version available for when you need newer models or features — without any manual PATH swapping or re-installing.
 
 ## How it works
 
@@ -77,7 +85,7 @@ Then skip to Step 3.
 
 ```powershell
 # 1. Temporarily install the version you want to pin
-#    v2.1.91 is the community-recommended stable version — change it if you prefer another
+#    See the Why section above for guidance on which version to choose
 & ([scriptblock]::Create((irm https://claude.ai/install.ps1))) -Target 2.1.91
 
 # 2. Verify the version is correct before copying
