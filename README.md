@@ -6,7 +6,7 @@ A lightweight Windows wrapper that turns the `claude` command into a version cho
 PS> claude
 
 Choose Claude Code version:
-  1) v2.1.63     Pinned daily-work version
+  1) v2.1.81     Pinned daily-work version
   2) latest      Current installed version
   d) doctor      Diagnostics
   h) help        Help
@@ -18,7 +18,11 @@ Choose:
 
 Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, and following multi-part instructions without drift.
 
-Users who notice this tend to pin the last version where the tool worked well for their workflow, while still wanting access to the latest for trying new models or features. This picker makes that possible without any manual PATH swapping or re-installing.
+Community research across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter points to **v2.1.81 as the most commonly cited "last good" version** before these regressions became widespread. Quality complaints appear consistently from around v2.1.86, and are clearly established by v2.1.92. A smaller group prefers v2.1.79 or v2.1.70, but v2.1.81 is the strongest rollback target reported across sources.
+
+> **Important nuance:** not all "worse planning / lazier" complaints map cleanly to a specific CLI build. Some regressions are tied to model and serving changes that affect all CLI versions rather than the CLI itself — particularly from the February–March 2026 period. v2.1.81 is the best community rollback target found, but it is not a guarantee against every quality issue if the underlying model behaviour changed independently of the CLI.
+
+This picker makes it possible to run v2.1.81 for serious agentic work while keeping the latest version available for newer models and features — without any manual PATH swapping or re-installing.
 
 ## How it works
 
@@ -47,7 +51,7 @@ You can clone to any folder. The examples below use `C:\Tools\claude-version-pic
 
 You need a standalone `.exe` for the version you want to freeze. Place it in the `versions\` folder as either:
 
-- `versions\claude-v2.1.63.exe` — versioned name (auto-detected, label shown in menu)
+- `versions\claude-v2.1.81.exe` — versioned name (auto-detected, label shown in menu)
 - `versions\claude-old.exe` — generic name (also auto-detected)
 
 **Option A — you already have the version installed right now**
@@ -69,13 +73,14 @@ Then skip to Step 3.
 
 ```powershell
 # 1. Temporarily install the version you want to pin
-& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) -Target 2.1.63
+#    v2.1.81 is the community-recommended stable version — change it if you prefer another
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) -Target 2.1.81
 
 # 2. Verify the version is correct before copying
 & "$env:USERPROFILE\.local\bin\claude.exe" --version
 
 # 3. Copy it to the versions folder (use the version number in the filename)
-Copy-Item "$env:USERPROFILE\.local\bin\claude.exe" "C:\Tools\claude-version-picker\versions\claude-v2.1.63.exe"
+Copy-Item "$env:USERPROFILE\.local\bin\claude.exe" "C:\Tools\claude-version-picker\versions\claude-v2.1.81.exe"
 
 # 4. Reinstall the latest
 irm https://claude.ai/install.ps1 | iex
@@ -177,7 +182,7 @@ Two environment variables let you override the auto-detected paths:
 Set them for a single session:
 
 ```powershell
-$env:CLAUDE_SWITCHER_OLD = 'D:\backups\claude-v2.1.63.exe'
+$env:CLAUDE_SWITCHER_OLD = 'D:\backups\claude-v2.1.81.exe'
 ```
 
 Or add them permanently via **System Properties → Environment Variables**.
@@ -227,10 +232,10 @@ Close all open CMD and PowerShell windows after running this.
 
 **Step 2 — Optionally save your pinned binary elsewhere**
 
-The `versions\` folder contains your pinned binary (e.g. `claude-v2.1.63.exe`). If you want to keep it as a backup before deleting the folder, copy it somewhere safe first:
+The `versions\` folder contains your pinned binary (e.g. `claude-v2.1.81.exe`). If you want to keep it as a backup before deleting the folder, copy it somewhere safe first:
 
 ```powershell
-Copy-Item 'C:\Tools\claude-version-picker\versions\claude-v2.1.63.exe' "$env:USERPROFILE\Desktop\claude-v2.1.63.exe"
+Copy-Item 'C:\Tools\claude-version-picker\versions\claude-v2.1.81.exe' "$env:USERPROFILE\Desktop\claude-v2.1.81.exe"
 ```
 
 Skip this step if you don't need the backup.
