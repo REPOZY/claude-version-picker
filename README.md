@@ -16,13 +16,13 @@ Choose:
 
 ## Why
 
-Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, and following multi-part instructions without drift.
+Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, following multi-part instructions without drift, and unexpectedly high token consumption within a single session.
 
 Community research across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter points to **v2.1.81 as the most commonly cited "last good" version** before these regressions became widespread. Quality complaints appear consistently from around v2.1.86, and are clearly established by v2.1.92. A smaller group prefers v2.1.79 or v2.1.70, but v2.1.81 is the strongest rollback target reported across sources.
 
-> **Important nuance:** not all "worse planning / lazier" complaints map cleanly to a specific CLI build. Some regressions are tied to model and serving changes that affect all CLI versions rather than the CLI itself — particularly from the February–March 2026 period. v2.1.81 is the best community rollback target found, but it is not a guarantee against every quality issue if the underlying model behaviour changed independently of the CLI.
+> **Important nuance:** not all "worse planning / lazier" complaints map cleanly to a specific CLI build. Some regressions are tied to model and serving changes that affect all CLI versions rather than the CLI itself — particularly from the February–March 2026 period. Version 2.1.81 is the best community rollback target found, but it is not a guarantee against every quality issue if the underlying model behaviour changed independently of the CLI.
 
-This picker makes it possible to run v2.1.81 for serious agentic work while keeping the latest version available for newer models and features — without any manual PATH swapping or re-installing.
+This picker makes it possible to run v2.1.81 for day-to-day work where consistent, predictable behaviour and efficient token usage matter, while keeping the latest version available for when you need its newer models and raw capabilities — without any manual PATH swapping or re-installing.
 
 ## How it works
 
