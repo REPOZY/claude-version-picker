@@ -16,7 +16,9 @@ Choose:
 
 ## Why
 
-Anthropic ships Claude Code updates frequently. New versions bring new models (e.g. Opus 4.7 requires v2.1.111+) but can occasionally change behaviour in ways that affect ongoing work. This picker lets you stay on a known-good version day-to-day while keeping the latest available whenever you need it — no re-installing, no PATH juggling by hand.
+Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, and following multi-part instructions without drift.
+
+Users who notice this tend to pin the last version where the tool worked well for their workflow, while still wanting access to the latest for trying new models or features. This picker makes that possible without any manual PATH swapping or re-installing.
 
 ## How it works
 
@@ -206,6 +208,48 @@ Run `& "$env:USERPROFILE\.local\bin\claude.exe" install latest --force`. This ha
 
 **Diagnostics**
 Run `claude doctor` — it shows the exact paths and versions the picker has resolved, plus the output of `where.exe claude`.
+
+## Uninstalling
+
+The picker is entirely self-contained — removing it restores your terminal to using Claude Code directly, and your Claude Code installations are not touched at any point.
+
+**Step 1 — Remove the picker folder from PATH**
+
+```powershell
+$pickerPath = 'C:\Tools\claude-version-picker'   # adjust if you used a different folder
+$current = [Environment]::GetEnvironmentVariable('Path', 'User')
+$updated = ($current -split ';' | Where-Object { $_ -ne $pickerPath }) -join ';'
+[Environment]::SetEnvironmentVariable('Path', $updated, 'User')
+Write-Host "Removed from PATH. Open a new terminal to apply."
+```
+
+Close all open CMD and PowerShell windows after running this.
+
+**Step 2 — Optionally save your pinned binary elsewhere**
+
+The `versions\` folder contains your pinned binary (e.g. `claude-v2.1.63.exe`). If you want to keep it as a backup before deleting the folder, copy it somewhere safe first:
+
+```powershell
+Copy-Item 'C:\Tools\claude-version-picker\versions\claude-v2.1.63.exe' "$env:USERPROFILE\Desktop\claude-v2.1.63.exe"
+```
+
+Skip this step if you don't need the backup.
+
+**Step 3 — Delete the picker folder**
+
+```powershell
+Remove-Item -Recurse -Force 'C:\Tools\claude-version-picker'
+```
+
+**Step 4 — Verify**
+
+Open a fresh terminal and run:
+
+```
+where.exe claude
+```
+
+It should now show only your Claude Code install at `%USERPROFILE%\.local\bin\claude.exe`. Running `claude` will launch Claude Code directly, with no version menu.
 
 ## License
 
