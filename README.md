@@ -6,7 +6,7 @@ A lightweight Windows wrapper that turns the `claude` command into a version cho
 PS> claude
 
 Choose Claude Code version:
-  1) v2.1.91     Pinned daily-work version
+  1) v2.1.110    Pinned daily-work version
   2) latest      Current installed version
   d) doctor      Diagnostics
   h) help        Help
@@ -17,14 +17,6 @@ Choose:
 ## Why
 
 Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, following multi-part instructions without drift, and unexpectedly high token consumption within a single session.
-
-Analysis of the [official Claude Code changelog](https://code.claude.com/docs/en/changelog), cross-referenced with community reports across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter, surfaces the following picture.
-
-### The one confirmed CLI-level behavioral change
-
-**v2.1.94 (April 7) changed the default effort level from `medium` to `high`** for all non-Pro users (API key, Bedrock, Vertex, Team, Enterprise). This is the only change in the changelog that maps directly and unambiguously to the "heavier, more token-hungry, more overthinky" complaints. It is a CLI-level default — not a model-level change — and it is **fully configurable**: every version from v2.1.76 onward supports `/effort medium` to restore the lighter behavior, regardless of which CLI version you are running.
-
-The practical implication: you do not need to pin an old binary to get the old effort behavior. You can run the latest version and type `/effort medium` (or set it in `settings.json` as `"effort": "medium"`) and get the same result.
 
 ### Version recommendations
 
@@ -63,7 +55,7 @@ You can clone to any folder. The examples below use `C:\Tools\claude-version-pic
 
 You need a standalone `.exe` for the version you want to freeze. Place it in the `versions\` folder as either:
 
-- `versions\claude-v2.1.91.exe` — versioned name (auto-detected, label shown in menu)
+- `versions\claude-v2.1.110.exe` — versioned name (auto-detected, label shown in menu)
 - `versions\claude-old.exe` — generic name (also auto-detected)
 
 **Option A — you already have the version installed right now**
@@ -86,13 +78,13 @@ Then skip to Step 3.
 ```powershell
 # 1. Temporarily install the version you want to pin
 #    See the Why section above for guidance on which version to choose
-& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) -Target 2.1.91
+& ([scriptblock]::Create((irm https://claude.ai/install.ps1))) -Target 2.1.110
 
 # 2. Verify the version is correct before copying
 & "$env:USERPROFILE\.local\bin\claude.exe" --version
 
 # 3. Copy it to the versions folder (use the version number in the filename)
-Copy-Item "$env:USERPROFILE\.local\bin\claude.exe" "C:\Tools\claude-version-picker\versions\claude-v2.1.91.exe"
+Copy-Item "$env:USERPROFILE\.local\bin\claude.exe" "C:\Tools\claude-version-picker\versions\claude-v2.1.110.exe"
 
 # 4. Reinstall the latest
 irm https://claude.ai/install.ps1 | iex
@@ -194,7 +186,7 @@ Two environment variables let you override the auto-detected paths:
 Set them for a single session:
 
 ```powershell
-$env:CLAUDE_SWITCHER_OLD = 'D:\backups\claude-v2.1.91.exe'
+$env:CLAUDE_SWITCHER_OLD = 'D:\backups\claude-v2.1.110.exe'
 ```
 
 Or add them permanently via **System Properties → Environment Variables**.
@@ -244,10 +236,10 @@ Close all open CMD and PowerShell windows after running this.
 
 **Step 2 — Optionally save your pinned binary elsewhere**
 
-The `versions\` folder contains your pinned binary (e.g. `claude-v2.1.91.exe`). If you want to keep it as a backup before deleting the folder, copy it somewhere safe first:
+The `versions\` folder contains your pinned binary (e.g. `claude-v2.1.110.exe`). If you want to keep it as a backup before deleting the folder, copy it somewhere safe first:
 
 ```powershell
-Copy-Item 'C:\Tools\claude-version-picker\versions\claude-v2.1.91.exe' "$env:USERPROFILE\Desktop\claude-v2.1.91.exe"
+Copy-Item 'C:\Tools\claude-version-picker\versions\claude-v2.1.110.exe' "$env:USERPROFILE\Desktop\claude-v2.1.110.exe"
 ```
 
 Skip this step if you don't need the backup.
