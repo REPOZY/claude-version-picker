@@ -18,11 +18,11 @@ Choose:
 
 Anthropic ships Claude Code updates frequently. New versions bring access to newer models (e.g. Opus 4.7 requires v2.1.111+), but a recurring pattern in the Claude Code community is that certain updates change agentic behaviour in ways that feel less reliable for complex, multi-step work — things like long-horizon planning, context management across large codebases, following multi-part instructions without drift, and unexpectedly high token consumption within a single session.
 
-Community research across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter surfaces two versions worth knowing about:
+Analysis of the [official Claude Code changelog](https://code.claude.com/docs/en/changelog), cross-referenced with community reports across GitHub issues, Reddit (r/ClaudeAI, r/LocalLLaMA), Hacker News, and X/Twitter, surfaces two versions worth knowing about:
 
-**v2.1.110 — best all-around choice.** Best balance of maturity and modern features. Avoids the very fresh Opus 4.7 transition and the newest packaging regressions, while including a significant wave of April fixes. Known issues remain (repeated compaction on small tasks, visual history duplication on resize, deny-rule bypass behaviour, Desktop skill-menu regressions), but as an overall compromise it outperforms both the older folklore versions and the newest builds.
+**v2.1.110 — best all-around choice.** Best balance of maturity and modern features. It sits just before v2.1.111, which introduced Opus 4.7 and the `xhigh` effort level. Known issues remain (repeated compaction on small tasks, visual history duplication on resize, deny-rule bypass behaviour, Desktop skill-menu regressions), but as an overall compromise it outperforms both the older folklore versions and the newest builds.
 
-**v2.1.91 — best rollback target if you want the older "feel".** The version to pin if your goal is less heavy, less overthinky, less token-hungry behaviour. It sits before the April 7 default-effort jump and before Opus 4.7. Preferred over v2.1.92, which introduced a Bedrock auth regression that v2.1.91 did not have.
+**v2.1.91 — best rollback target if you want the older "feel".** The version to pin if your goal is less heavy, less overthinky, less token-hungry behaviour. Two confirmed changelog facts make this the conservative cutoff: v2.1.94 (April 7) changed the default effort level from `medium` to `high` for all non-Pro users, and v2.1.94 also introduced a Bedrock auth regression that persisted through v2.1.95 and was not fully resolved until v2.1.98. v2.1.91 predates both.
 
 > **Important nuance:** not all "worse planning / lazier" complaints map cleanly to a specific CLI build. Some regressions are tied to model and serving changes that affect all CLI versions rather than the CLI itself. No pinned version is a guarantee against every quality issue if the underlying model behaviour changed independently of the CLI.
 

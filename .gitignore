@@ -10,3 +10,6 @@ desktop.ini
 .DS_Store
 
 todo
+
+# AI assistant artifacts
+context-snapshot.json
