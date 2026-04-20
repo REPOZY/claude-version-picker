@@ -22,7 +22,6 @@ Anthropic ships Claude Code updates frequently. New versions bring access to new
 
 **v2.1.110 — best all-around.** The last release before Opus 4.7 (introduced in v2.1.111), with all security and stability fixes from April 7–15 included. The effort default is `high` from v2.1.94, but `/effort medium` restores lighter behavior. Recommended for users who want a mature, well-tested binary without the Opus 4.7 transition and without sacrificing security hardening.
 
-**v2.1.91 — maximum conservatism, with tradeoffs.** Predates the effort default change and the Bedrock auth regression (both v2.1.94). Effort is `medium` by default — no extra configuration needed. The cost is real: v2.1.91 misses significant security fixes introduced in v2.1.98, including a Bash tool permission bypass where a backslash-escaped flag could be auto-allowed as read-only and enable arbitrary code execution, and hardened checks for compound commands and network redirects. Appropriate for personal and hobby use where agentic security is not a concern. Not recommended for production, CI, or enterprise contexts.
 
 > **Important nuance:** a majority of "worse planning / lazier / heavier" complaints in the community are actually tied to model and serving changes on Anthropic's side — changes that affect all CLI versions equally and cannot be avoided by pinning any specific binary. The CLI version controls defaults and tooling; it does not pin the model's reasoning behaviour. No pinned CLI version is a guarantee against model-level regressions.
 
